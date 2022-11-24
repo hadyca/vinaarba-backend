@@ -8,7 +8,7 @@
     "migrate": "npx prisma migrate dev --preview-feature",
     "studio": "npx prisma studio",
     "build": "babel src --out-dir build",
-    "start": "node build/server"
+    "start": "npm run build && node build/server"
   },
   "keywords": [],
   "author": "",
