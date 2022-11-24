@@ -1,0 +1,343 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                          Int                          @id @default(autoincrement())
+  username                    String                       @unique
+  usernameEditDate            String?
+  email                       String                       @unique               
+  avatarUrl                   String?
+  avatarKey                   String?
+  bio                         String?
+  password                    String
+  alertStatus                 Boolean                       @default(false)
+  language                    String            
+  following                   User[]                        @relation("FollowRelation") 
+  followers                   User[]                       @relation("FollowRelation")
+  favoriteUserPosts           UserPost[]                  @relation("UserFavoriteRelation")
+  favoriteCompanyPosts        CompanyPost[]                @relation("CompanyFavoriteRelation")
+  companyPostLikes            CompanyPostLike[]
+  userPostLikes               UserPostLike[]
+  myCompany                   Company?                
+  companyPostComments         CompanyPostComment[]
+  companyPostReComments       CompanyPostReComment[]
+  userPostComments            UserPostComment[]
+  userPostReComments          UserPostReComment[]
+  userPosts                   UserPost[]
+  userPostReports             UserPostReport[]
+  userPostCommentReports      UserPostCommentReport[]
+  userPostReCommentReports    UserPostReCommentReport[]
+  companyPostReports          CompanyPostReport[]
+  companyPostCommentReports   CompanyPostCommentReport[]
+  companyPostReCommentReports CompanyPostReCommentReport[]
+  contacts                    Contact[]
+  notifications               Notification[]
+  notificationTypes           NotificationType[]
+  userReports                 UserReport[]               @relation("ReportRelation")
+  reports                     UserReport[]              @relation("ReportedRelation")
+  pushTokens                  PushToken[]
+  createdAt                   DateTime                     @default(now())
+  updatedAt                   DateTime                     @updatedAt
+}
+
+
+model UserPost {
+  id               Int               @id @default(autoincrement())
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           Int
+  favoritedUser    User[]             @relation("UserFavoriteRelation")
+  file             File[]
+  content          String
+  categoryId       Int
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  userLikes        UserPostLike[]
+  userPostComments UserPostComment[]
+  deleted          Boolean           @default(false)
+  reports          UserPostReport[]
+}
+
+model UserPostLike {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  userPost   UserPost @relation(fields: [userPostId], references: [id],  onDelete: Cascade)
+  userPostId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userId, userPostId])
+}
+
+model UserPostComment {
+  id                 Int                     @id @default(autoincrement())
+  user               User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             Int
+  userPost           UserPost                @relation(fields: [userPostId], references: [id],  onDelete: Cascade)
+  userPostId         Int
+  payload            String
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
+  userPostReComments UserPostReComment[]
+  reports            UserPostCommentReport[]
+}
+
+model UserPostReComment {
+  id                Int                       @id @default(autoincrement())
+  user              User                      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int
+  userPostComment   UserPostComment           @relation(fields: [userPostCommentId], references: [id], onDelete: Cascade)
+  userPostCommentId Int
+  payload           String
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+  reports           UserPostReCommentReport[]
+}
+
+//User와 1:1관계 (회사 오너만 / 운영자 승인 후 연결)
+model Company {
+  id             Int           @id @default(autoincrement())
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         Int           @unique
+  companyName    String
+  addressStep1   String //가장 큰 행정 구역 (시스템 제공)
+  addressStep2   String //두번 째로 큰 행정 구역 (시스템 제공)
+  addressStep3   String //나머지 주소 (사용자가 직접 타이핑)
+  email          String        
+  aboutUs        String // 회사 소개
+  contactNumber  String
+  totalEmployees Int
+  companyPosts   CompanyPost[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model CompanyPost {
+  id                  Int                  @id @default(autoincrement())
+  favoritedUser       User[]               @relation("CompanyFavoriteRelation")
+  company             Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId           Int
+  file                File[]
+  title               String
+  workingDay          WorkingDay?          
+  dayOption           Boolean             @default(false)
+  startTime           Int
+  finishTime          Int
+  timeOption          Boolean             @default(false)
+  wageTypeId          Int
+  wage                String
+  contactNumber       String
+  email               String
+  content             String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  companyLikes        CompanyPostLike[]
+  companyPostComments CompanyPostComment[]
+  deleted             Boolean              @default(false)
+  reports             CompanyPostReport[]
+}
+
+model CompanyPostLike {
+  id            Int         @id @default(autoincrement())
+  user          User        @relation(fields: [userId], references: [id])
+  userId        Int
+  companyPost   CompanyPost @relation(fields: [companyPostId], references: [id], onDelete: Cascade)
+  companyPostId Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@unique([userId, companyPostId])
+}
+
+model CompanyPostComment {
+  id                    Int                        @id @default(autoincrement())
+  user                  User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                Int
+  companyPost           CompanyPost                @relation(fields: [companyPostId], references: [id], onDelete: Cascade)
+  companyPostId         Int
+  payload               String
+  createdAt             DateTime                   @default(now())
+  updatedAt             DateTime                   @updatedAt
+  companyPostReComments CompanyPostReComment[]
+  reports               CompanyPostCommentReport[]
+}
+
+model CompanyPostReComment {
+  id                   Int                          @id @default(autoincrement())
+  user                 User                         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               Int
+  companyPostComment   CompanyPostComment           @relation(fields: [companyPostCommentId], references: [id], onDelete: Cascade)
+  companyPostCommentId Int
+  payload              String
+  createdAt            DateTime                     @default(now())
+  updatedAt            DateTime                     @updatedAt
+  reports              CompanyPostReCommentReport[]
+}
+
+model File {
+  id            Int          @id @default(autoincrement())
+  fileUrl       String
+  fileKey       String
+  userPost      UserPost?    @relation(fields: [userPostId], references: [id], onDelete: Cascade)
+  userPostId    Int?
+  companyPost   CompanyPost? @relation(fields: [companyPostId], references: [id], onDelete: Cascade)
+  companyPostId Int?
+  createdAt     DateTime                     @default(now())
+  updatedAt     DateTime                     @updatedAt
+}
+
+// -------Report Part-------
+
+model UserPostReport {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  reason     String
+  userPost   UserPost @relation(fields: [userPostId], references: [id], onDelete: Cascade)
+  userPostId Int
+  check      Boolean  @default(false)
+  delete     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model UserPostCommentReport {
+  id                Int             @id @default(autoincrement())
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            Int
+  reason            String
+  userPostComment   UserPostComment @relation(fields: [userPostCommentId], references: [id], onDelete: Cascade)
+  userPostCommentId Int
+  check             Boolean         @default(false)
+  delete            Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+}
+
+model UserPostReCommentReport {
+  id                  Int               @id @default(autoincrement())
+  user                User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              Int
+  reason              String
+  userPostReComment   UserPostReComment @relation(fields: [userPostReCommentId], references: [id], onDelete: Cascade)
+  userPostReCommentId Int
+  check               Boolean           @default(false)
+  delete              Boolean           @default(false)
+  createdAt           DateTime          @default(now())
+}
+
+model CompanyPostReport {
+  id            Int         @id @default(autoincrement())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  reason        String
+  companyPost   CompanyPost @relation(fields: [companyPostId], references: [id], onDelete: Cascade)
+  companyPostId Int
+  check         Boolean     @default(false)
+  delete        Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+}
+
+model CompanyPostCommentReport {
+  id                   Int                @id @default(autoincrement())
+  user                 User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               Int
+  reason               String
+  companyPostComment   CompanyPostComment @relation(fields: [companyPostCommentId], references: [id], onDelete: Cascade)
+  companyPostCommentId Int
+  check                Boolean            @default(false)
+  delete               Boolean            @default(false)
+  createdAt            DateTime           @default(now())
+}
+
+model CompanyPostReCommentReport {
+  id                     Int                  @id @default(autoincrement())
+  user                   User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                 Int
+  reason                 String
+  companyPostReComment   CompanyPostReComment @relation(fields: [companyPostReCommentId], references: [id], onDelete: Cascade)
+  companyPostReCommentId Int
+  check                  Boolean              @default(false)
+  delete                 Boolean              @default(false)
+  createdAt              DateTime             @default(now())
+}
+
+model UserReport {
+  id                Int      @id @default(autoincrement())
+  FromUser          User      @relation("ReportRelation",fields: [FromUserId], references: [id], onDelete: Cascade)
+  FromUserId        Int
+  ToUser            User       @relation("ReportedRelation", fields: [ToUserId], references: [id], onDelete: Cascade)
+  ToUserId          Int
+  reason            String
+  check             Boolean  @default(false)
+  delete            Boolean  @default(false)
+  createdAt         DateTime @default(now())
+}
+
+model Contact {
+  id            Int         @id @default(autoincrement())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  type          String
+  content       String
+  email         String
+  reply         Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+}
+
+model Notification {
+  id            Int         @id @default(autoincrement())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  receiverId    Int
+  type          String
+  postId        Int?
+  contentId     Int
+  createdAt     DateTime    @default(now())
+}
+
+model NotificationType {
+  id                    Int         @id @default(autoincrement())
+  user                  User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                Int         @unique
+  notice                Boolean     @default(true)
+  following             Boolean     @default(true)
+  userPostLike          Boolean     @default(true)
+  userPostComment       Boolean     @default(true)
+  companyPostLike       Boolean     @default(true)
+  companyPostComment    Boolean     @default(true)
+  createdAt             DateTime    @default(now())
+}
+
+model WorkingDay {
+  id                  Int                      @id @default(autoincrement())
+  companyPost         CompanyPost              @relation(fields: [companyPostId], references: [id], onDelete: Cascade)
+  companyPostId       Int                      @unique
+  mon                 Boolean                  @default(false)
+  tue                 Boolean                  @default(false)
+  wed                 Boolean                  @default(false)
+  thu                 Boolean                  @default(false)
+  fri                 Boolean                  @default(false)
+  sat                 Boolean                  @default(false)
+  sun                 Boolean                  @default(false)
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+}
+
+model PushToken {
+  id            Int         @id @default(autoincrement())
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  pushToken     String      @unique
+  createdAt     DateTime    @default(now())
+}
+
+
+// -------End of Report Part-------
