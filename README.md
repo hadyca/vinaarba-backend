@@ -1,7 +1,5 @@
 ## prisma schema
 
-123
-
 - [x] 각 모델 데이터 생성
 
 ## User
