@@ -37,11 +37,19 @@
     "express": "^4.18.2",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
-    "graphql-upload": "^16.0.2",
+    "graphql-upload": "^13.0.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
     "nodemailer-mailgun-transport": "^2.1.5",
     "redis": "^4.5.0"
+  },
+  "exports": {
+    "./GraphQLUpload.js": "./GraphQLUpload.js",
+    "./graphqlUploadExpress.js": "./graphqlUploadExpress.js",
+    "./graphqlUploadKoa.js": "./graphqlUploadKoa.js",
+    "./package.json": "./package.json",
+    "./processRequest.js": "./processRequest.js",
+    "./Upload.js": "./Upload.js"
   }
 }

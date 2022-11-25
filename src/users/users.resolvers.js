@@ -1,4 +1,5 @@
 import client from "../client";
+import { GraphQLUpload } from "graphql-upload";
 import { getUserCompany } from "../companies/companies.utils";
 
 export default {
@@ -69,4 +70,5 @@ export default {
       return countingPost;
     },
   },
+  Upload: GraphQLUpload,
 };
