@@ -15,6 +15,7 @@ const resolverFn = async (
   },
   { loggedInUser }
 ) => {
+  console.log(avatarUrl);
   try {
     const existingUser = await client.user.findUnique({
       where: {
