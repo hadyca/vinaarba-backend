@@ -3,18 +3,16 @@ import http from "http";
 import express from "express";
 import logger from "morgan";
 import { ApolloServer } from "apollo-server-express";
-import { graphqlUploadExpress, GraphQLUpload } from "graphql-upload";
+import { graphqlUploadExpress } from "graphql-upload";
 import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
-const PORT = process.env.PORT;
 
+const PORT = process.env.PORT;
 async function startServer() {
   const apollo = new ApolloServer({
     upload: false,
     typeDefs,
     resolvers,
-    playground: true, // 추가
-    introspection: true, // 추가
     context: async ({ req }) => {
       return {
         loggedInUser: await getUser(req.headers.token),
