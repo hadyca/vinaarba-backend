@@ -13,8 +13,6 @@ async function startServer() {
     upload: false,
     typeDefs,
     resolvers,
-    playground: true, // 추가
-    introspection: true, // 추가
     context: async ({ req }) => {
       return {
         loggedInUser: await getUser(req.headers.token),
