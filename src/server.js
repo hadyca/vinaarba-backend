@@ -10,6 +10,7 @@ import { typeDefs, resolvers } from "./schema";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { getUser } from "./users/users.utils";
+
 const PORT = process.env.PORT;
 
 async function startServer() {
@@ -20,6 +21,8 @@ async function startServer() {
     upload: false,
     typeDefs,
     resolvers,
+    playground: false,
+    introspection: false,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
     // context: async ({ req }) => {
     //   return {
