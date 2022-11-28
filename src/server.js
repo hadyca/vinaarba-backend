@@ -6,9 +6,9 @@ import { ApolloServer } from "@apollo/server";
 import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHttpServer";
 import { expressMiddleware } from "@apollo/server/express4";
 import { graphqlUploadExpress } from "graphql-upload";
-import { typeDefs, resolvers } from "./schema";
 import cors from "cors";
 import bodyParser from "body-parser";
+import { typeDefs, resolvers } from "./schema";
 import { getUser } from "./users/users.utils";
 
 const PORT = process.env.PORT;
@@ -24,11 +24,6 @@ async function startServer() {
     playground: false,
     introspection: false,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-    // context: async ({ req }) => {
-    //   return {
-    //     loggedInUser: await getUser(req.headers.token),
-    //   };
-    // },
   });
 
   await apollo.start();
@@ -36,8 +31,6 @@ async function startServer() {
     "/",
     cors(),
     bodyParser.json(),
-    // expressMiddleware accepts the same arguments:
-    // an Apollo Server instance and optional configuration options
     expressMiddleware(apollo, {
       context: async ({ req }) => {
         return {
@@ -48,8 +41,6 @@ async function startServer() {
   );
   app.use(logger("tiny"));
   app.use(graphqlUploadExpress({ maxFieldSize: 1000000 }));
-  // apollo.applyMiddleware({ app });
-
   httpServer.listen(PORT || 4000, () => {
     console.log(`🚀 Server is running http://localhost:${PORT}/`);
   });
