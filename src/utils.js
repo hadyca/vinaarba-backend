@@ -46,7 +46,7 @@ export const sendSecretMail = (language, address, loginSecret) => {
         <h1 style="color: #111111; margin: 10px 0px";>Verification code: ${loginSecret}</h1>
         <p style="color: #111111"; font-size: 18px; line-height: 28px;>Isn't that what you asked for?<p>
         <p style="color: #111111"; font-size: 18px; line-height: 28px;>Please let us know. VinaArba help you protect and verify your account.</p>
-        <p style="color: #111111; margin-top: 30px;">©별보는 캐리어. All rights reserved</p>
+        <p style="color: #111111; margin-top: 30px;">Thanks for being here!</p>
       </div>
         `
         : `
@@ -57,7 +57,7 @@ export const sendSecretMail = (language, address, loginSecret) => {
           <h1 style="color: #111111; margin: 10px 0px";>인증번호: ${loginSecret}</h1>
           <p style="color: #111111"; font-size: 18px; line-height: 28px;>회원님이 요청한 내용이 아닌가요?<p>
           <p style="color: #111111"; font-size: 18px; line-height: 28px;>비나알바에 알려주세요. 회원님의 계정 보호와 확인을 도와드리겠습니다.</p>
-          <p style="color: #111111; margin-top: 30px;">©별보는 캐리어. All rights reserved</p>
+          <p style="color: #111111; margin-top: 30px;">함께해주셔서 고맙습니다!</p>
         </div>
         `,
   };
