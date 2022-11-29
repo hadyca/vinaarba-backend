@@ -36,7 +36,17 @@ export const sendSecretMail = (language, address, loginSecret) => {
         : "🔒비나알바 인증 번호🔒",
     html:
       language === "vn"
-        ? ``
+        ? `
+      <div style="width:638px; height:auto; border: 1px solid #B0B0B0; padding: 48px; border-radius: 20px;">
+        <img src="https://avocadotalkbucket.s3.ap-northeast-2.amazonaws.com/asset/logo.png"; style="width:200px;" />
+        <hr style="color: #B0B0B0; margin: 30px 0px";/>
+        <p style="color: #111111";>Đừng cho bất ai biết mã xác nhận. Nhân viên của vina alba tuyệt đối không yêu cầu mã xác nhận.</p>
+        <h1 style="color: #111111; margin: 10px 0px";>Mã xác nhận: ${loginSecret}</h1>
+        <p style="color: #111111"; font-size: 18px; line-height: 28px;>Không phải là nội dung bạn yêu cầu?<p>
+        <p style="color: #111111"; font-size: 18px; line-height: 28px;>Hãy cho VinaArba biết. Chúng tôi sẽ giúp bạn xác nhận và bảo vệ tài khoản.</p>
+        <p style="color: #111111; margin-top: 30px;">Cám ơn luôn đồng hành với chúng tôi!</p>
+      </div>
+        `
         : language === "en"
         ? `
         <div style="width:638px; height:auto; border: 1px solid #B0B0B0; padding: 48px; border-radius: 20px;">
