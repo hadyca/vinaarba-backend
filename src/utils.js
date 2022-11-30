@@ -200,7 +200,6 @@ export const sendPushMsg = async (
     for (let chunk of chunks) {
       try {
         let ticketChunk = await expo.sendPushNotificationsAsync(chunk);
-        console.log("ticket:", ticketChunk);
         if (ticketChunk[0].status === "error") {
           console.log(`${ticketChunk[0].message} pushToken:`, chunk[0].to);
           //추후 DB에 저장할 것인가? 아니면 일단 운영자에게 알람 메시지만 보낼 것인가? 정하고 메시지 날리기
@@ -253,7 +252,6 @@ export const sendPushMsg = async (
     for (let chunk of receiptIdChunks) {
       try {
         let receipts = await expo.getPushNotificationReceiptsAsync(chunk);
-        console.log("receipts", receipts);
 
         // The receipts specify whether Apple or Google successfully received the
         // notification and information about an error, if one occurred.
