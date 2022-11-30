@@ -31,7 +31,7 @@ async function startServer() {
   const httpServer = http.createServer(app);
 
   httpServer.listen(PORT || 4000, () => {
-    console.log(`🚀 Server is running http://localhost:${PORT}/graphql ✅`);
+    console.log(`🚀 Server is running http://localhost:${PORT}`);
   });
 }
 startServer();
