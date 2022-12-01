@@ -335,7 +335,7 @@ model PushToken {
   id            Int         @id @default(autoincrement())
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId        Int
-  pushToken     String      @unique
+  pushToken     String      @unique     
   createdAt     DateTime    @default(now())
 }
 
