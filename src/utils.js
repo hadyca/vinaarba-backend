@@ -1,6 +1,13 @@
 import nodemailer from "nodemailer";
 import { Expo } from "expo-server-sdk";
 import client from "./client";
+const admin = require("firebase-admin");
+
+let serAccount = require("../vinaarba-4304f-firebase-adminsdk-xlbav-e790d17328.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serAccount),
+});
 
 export const generateSecret = (min, max) => {
   const randomNumber = Math.floor(Math.random() * (max - min) + min);
@@ -128,6 +135,29 @@ export const sendSecretMail = (language, address, loginSecret) => {
 //     console.log(error);
 //   }
 // };
+
+export const pushMsg = async () => {
+  let target_token =
+    "crnt5mzOQ0247bKB5E8cBL:APA91bFBzFRRoFmeZY-VZwTlI1xZUTDoAI5D_RP_HYVsCQASU38Cf5kE0w4_gILmZvgH4UZk_Mi5Uxxjk1NKnbt_AyTnLC2ExTa0t85WoozZcuYzKaT9nY6oRJkczBvwxIiiS786cKy4";
+  let message = {
+    data: {
+      title: "테스트 데이터 발송",
+      body: "데이터가 잘 가나요?",
+      style: "굳굳",
+    },
+    token: target_token,
+  };
+  admin
+    .messaging()
+    .send(message)
+    .then(function (response) {
+      console.log("Successfully sent message: : ", response);
+    })
+    .catch(function (err) {
+      console.log("Error Sending message!!! : ", err);
+    });
+};
+
 export const sendPushMsg = async (
   receiverId,
   sendUserId,

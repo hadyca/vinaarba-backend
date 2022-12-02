@@ -1,6 +1,6 @@
 import client from "../../client";
 import { protectedResolver } from "../../users/users.utils";
-import { sendPushMsg } from "../../utils";
+import { pushMsg, sendPushMsg } from "../../utils";
 
 export default {
   Mutation: {
@@ -59,6 +59,7 @@ export default {
           });
 
           if (existNotification.userPostLike) {
+            // await pushMsg();
             const msg =
               postUser.language === "vn"
                 ? "đã để lại ❤ vào bài viết của bạn!"
