@@ -21,8 +21,10 @@ model User {
   password                    String
   alertStatus                 Boolean                       @default(false)
   language                    String            
-  following                   User[]                        @relation("FollowRelation") 
-  followers                   User[]                       @relation("FollowRelation")
+  following                   User[]                        @relation("FollowRelation")
+  followers                   User[]                        @relation("FollowRelation")
+  blocking                    User[]                        @relation("BlockRelation")  
+  blockers                    User[]                        @relation("BlockRelation")
   favoriteUserPosts           UserPost[]                  @relation("UserFavoriteRelation")
   favoriteCompanyPosts        CompanyPost[]                @relation("CompanyFavoriteRelation")
   companyPostLikes            CompanyPostLike[]

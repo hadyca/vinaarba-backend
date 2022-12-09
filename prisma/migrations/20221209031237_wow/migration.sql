@@ -317,6 +317,12 @@ CREATE TABLE "_FollowRelation" (
 );
 
 -- CreateTable
+CREATE TABLE "_BlockRelation" (
+    "A" INTEGER NOT NULL,
+    "B" INTEGER NOT NULL
+);
+
+-- CreateTable
 CREATE TABLE "_UserFavoriteRelation" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -357,6 +363,12 @@ CREATE UNIQUE INDEX "_FollowRelation_AB_unique" ON "_FollowRelation"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_FollowRelation_B_index" ON "_FollowRelation"("B");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_BlockRelation_AB_unique" ON "_BlockRelation"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_BlockRelation_B_index" ON "_BlockRelation"("B");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_UserFavoriteRelation_AB_unique" ON "_UserFavoriteRelation"("A", "B");
@@ -483,6 +495,12 @@ ALTER TABLE "_FollowRelation" ADD CONSTRAINT "_FollowRelation_A_fkey" FOREIGN KE
 
 -- AddForeignKey
 ALTER TABLE "_FollowRelation" ADD CONSTRAINT "_FollowRelation_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_BlockRelation" ADD CONSTRAINT "_BlockRelation_A_fkey" FOREIGN KEY ("A") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_BlockRelation" ADD CONSTRAINT "_BlockRelation_B_fkey" FOREIGN KEY ("B") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_UserFavoriteRelation" ADD CONSTRAINT "_UserFavoriteRelation_A_fkey" FOREIGN KEY ("A") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;

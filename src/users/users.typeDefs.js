@@ -13,7 +13,10 @@ export default gql`
     isMe: Boolean!
     following: [User]
     followers: [User]
+    blocking: [User]
+    blockers: [User]
     isFollowing: Boolean!
+    isBlocking: Boolean!
     totalFollowers: Int!
     favoriteUserPosts: [UserPost]
     favoriteCompanyPosts: [CompanyPost]

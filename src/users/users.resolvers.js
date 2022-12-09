@@ -33,8 +33,17 @@ export default {
     isFollowing: async ({ id }, _, { loggedInUser }) => {
       const exists = await client.user.count({
         where: {
-          username: loggedInUser.username,
+          id: loggedInUser.id,
           following: { some: { id } },
+        },
+      });
+      return Boolean(exists);
+    },
+    isBlocking: async ({ id }, _, { loggedInUser }) => {
+      const exists = await client.user.count({
+        where: {
+          id: loggedInUser.id,
+          blocking: { some: { id } },
         },
       });
       return Boolean(exists);

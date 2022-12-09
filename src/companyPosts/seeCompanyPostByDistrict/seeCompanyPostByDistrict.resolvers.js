@@ -77,7 +77,7 @@ export default {
           },
         },
 
-        take: 5,
+        take: 10,
         skip: offset,
         orderBy: {
           createdAt: "desc",

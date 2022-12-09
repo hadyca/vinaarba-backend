@@ -18,7 +18,7 @@ export default {
         const favoritePosts = await client.user
           .findUnique({ where: { id: loggedInUser.id } })
           .favoriteCompanyPosts({
-            take: 5,
+            take: 10,
             skip: offset,
             orderBy: {
               createdAt: "desc",

@@ -2,14 +2,14 @@ import client from "../../client";
 
 export default {
   Query: {
-    seeAllUserPosts: (_, { offset }) =>
+    seeAllUserPosts: async (_, { offset }) =>
       client.userPost.findMany({
         where: {
           NOT: {
             deleted: true,
           },
         },
-        take: 5,
+        take: 10,
         skip: offset,
         orderBy: {
           createdAt: "desc",

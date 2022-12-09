@@ -10,6 +10,7 @@ export default gql`
     totalUserPostLikes: Int!
     totalUserPostComments: Int!
     isFavorite: Boolean!
+    isBlocking: Boolean!
     userPostComments: [UserPostComment]
     deleted: Boolean!
     createdAt: String!
