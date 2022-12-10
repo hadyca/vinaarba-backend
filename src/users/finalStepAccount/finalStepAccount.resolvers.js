@@ -5,7 +5,7 @@ import { redisCli } from "../../redis";
 
 export default {
   Mutation: {
-    createPassword: async (
+    finalStepAccount: async (
       _,
       { password, email, username, language, pushToken }
     ) => {
