@@ -75,6 +75,25 @@ export default {
       });
       return Boolean(exists);
     },
+    isBlocking: async ({ id }, _, { loggedInUser }) => {
+      const post = await client.companyPost.findUnique({
+        where: {
+          id,
+        },
+      });
+      const company = await client.company.findUnique({
+        where: {
+          id: post.companyId,
+        },
+      });
+      const exists = await client.user.count({
+        where: {
+          id: loggedInUser.id,
+          blocking: { some: { id: company.userId } },
+        },
+      });
+      return Boolean(exists);
+    },
     isLiked: async ({ id }, _, { loggedInUser }) => {
       if (!loggedInUser) {
         return false;
