@@ -18,8 +18,8 @@ export default {
           };
         } else {
           const loginSecret = generateSecret(111111, 999999);
-          redisCli.set(email, loginSecret);
-          redisCli.expire(email, 60 * 3);
+          await redisCli.set(email, loginSecret);
+          await redisCli.expire(email, 60 * 3);
           sendSecretMail(language, email, loginSecret);
           // await sendSMS(language, countryCode, phoneNumber, loginSecret); //추 후 문자 인증시사용
           return {
