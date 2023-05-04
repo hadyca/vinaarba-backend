@@ -4,7 +4,6 @@ export default {
   Mutation: {
     confirmSecret: (_, { email, secret }) => {
       const redisSecret = redisCli.get(email);
-      console.log(redisSecret);
       if (!redisSecret) {
         return {
           ok: false,
