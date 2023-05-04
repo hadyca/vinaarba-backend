@@ -2,9 +2,9 @@ import { redisCli } from "../../redis";
 
 export default {
   Mutation: {
-    confirmSecret: async (_, { email, secret }) => {
-      const redisSecret = await redisCli.get(email);
-
+    confirmSecret: (_, { email, secret }) => {
+      const redisSecret = redisCli.get(email);
+      console.log(redisSecret);
       if (!redisSecret) {
         return {
           ok: false,
