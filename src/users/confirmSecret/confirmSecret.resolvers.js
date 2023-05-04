@@ -17,6 +17,7 @@ export default {
         };
       }
       if (redisSecret === secret) {
+        await redisCli.del(email);
         return {
           ok: true,
         };
