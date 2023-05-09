@@ -12,8 +12,8 @@ async function startServer() {
   const apollo = new ApolloServer({
     typeDefs,
     resolvers,
-    playground: false,
-    introspection: false,
+    // playground: true, 이거랑
+    // introspection: true, 이거는 테스트할때만 사용
     context: async ({ req }) => {
       return {
         loggedInUser: await getUser(req.headers.token),
