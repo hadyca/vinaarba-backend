@@ -29,7 +29,6 @@ export default {
             },
           },
         });
-        await redisCli.del(email);
         const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY);
         const existPushToken = await client.pushToken.findUnique({
           where: {
