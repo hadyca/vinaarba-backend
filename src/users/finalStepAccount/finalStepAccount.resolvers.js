@@ -1,7 +1,6 @@
 import client from "../../client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { redisCli } from "../../redis";
 
 export default {
   Mutation: {
