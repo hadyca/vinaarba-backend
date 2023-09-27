@@ -38,7 +38,7 @@ export const sendSecretMail = (language, address, loginSecret) => {
       language === "vn"
         ? `
       <div style="width:638px; height:auto; border: 1px solid #B0B0B0; padding: 48px; border-radius: 20px;">
-        <img src="https://vinaarba-bucket.s3.ap-southeast-1.amazonaws.com/asset/logo.png"; style="width:200px;" />
+        <img src="https://vinaarbabucket.s3.ap-southeast-1.amazonaws.com/asset/logo.png"; style="width:200px;" />
         <hr style="color: #B0B0B0; margin: 30px 0px";/>
         <p style="color: #111111";>Đừng cho bất ai biết mã xác nhận. Nhân viên của vina alba tuyệt đối không yêu cầu mã xác nhận.</p>
         <h1 style="color: #111111; margin: 10px 0px";>Mã xác nhận: ${loginSecret}</h1>
@@ -50,7 +50,7 @@ export const sendSecretMail = (language, address, loginSecret) => {
         : language === "en"
         ? `
         <div style="width:638px; height:auto; border: 1px solid #B0B0B0; padding: 48px; border-radius: 20px;">
-        <img src="https://vinaarba-bucket.s3.ap-southeast-1.amazonaws.com/asset/logo.png"; style="width:200px;" />
+        <img src="https://vinaarbabucket.s3.ap-southeast-1.amazonaws.com/asset/logo.png"; style="width:200px;" />
         <hr style="color: #B0B0B0; margin: 30px 0px";/>
         <p style="color: #111111";>Don't tell anyone the code. VinaArba employees never ask for a security code.</p>
         <h1 style="color: #111111; margin: 10px 0px";>Verification code: ${loginSecret}</h1>
@@ -61,7 +61,7 @@ export const sendSecretMail = (language, address, loginSecret) => {
         `
         : `
         <div style="width:638px; height:auto; border: 1px solid #B0B0B0; padding: 48px; border-radius: 20px;">
-          <img src="https://vinaarba-bucket.s3.ap-southeast-1.amazonaws.com/asset/logo.png"; style="width:200px;" />
+          <img src="https://vinaarbabucket.s3.ap-southeast-1.amazonaws.com/asset/logo.png"; style="width:200px;" />
           <hr style="color: #B0B0B0; margin: 30px 0px";/>
           <p style="color: #111111";>아무에게도 코드를 알려주지 마세요. 비나알바 직원이 보안 코드를 요청하는 일은 절대 없습니다.</p>
           <h1 style="color: #111111; margin: 10px 0px";>인증번호: ${loginSecret}</h1>

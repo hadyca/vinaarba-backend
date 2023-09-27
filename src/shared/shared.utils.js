@@ -13,7 +13,7 @@ export const uploadToS3 = async (file, userId, folderName) => {
   const objectName = `${folderName}/${userId}-${Date.now()}-${filename}`;
   const data = await new AWS.S3()
     .upload({
-      Bucket: "vinaarba-bucket",
+      Bucket: "vinaarbabucket",
       Key: objectName,
       ACL: "public-read",
       Body: readStream,
@@ -25,7 +25,7 @@ export const uploadToS3 = async (file, userId, folderName) => {
 export const deleteFile = async (key) => {
   await new AWS.S3()
     .deleteObject({
-      Bucket: "vinaarba-bucket",
+      Bucket: "vinaarbabucket",
       Key: key,
     })
     .promise();
